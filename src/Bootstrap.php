@@ -59,7 +59,7 @@ switch($routeInfo[0]) {
         break;
 }
 
-echo $response;
+//echo $response;
 //$response->prepare($request);
 //$response->send();
 
