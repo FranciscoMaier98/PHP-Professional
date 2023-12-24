@@ -1,6 +1,12 @@
 <?php declare(strict_types=1);
 
 use Auryn\Injector;
+use SocialNews\Framework\Csrf\TokenStorage;
+use SocialNews\Framework\Csrf\SymfonySessionTokenStorage;
+
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
 use SocialNews\Framework\Rendering\TemplateDirectory;
@@ -15,6 +21,10 @@ use SocialNews\Framework\Dbal\DatabaseUrl;
 $injector = new Injector();
 //$injector->alias(SubmissionsQuery::class, MockSubmissionsQuery::class);
 $injector->alias(SubmissionsQuery::class, DbalSubmissionsQuery::class);
+
+$injector->alias(TokenStorage::class, SymfonySessionTokenStorage::class);
+$injector->alias(SessionInterface::class, Session::class);
+
 $injector->share(SubmissionsQuery::class);
 $injector->share(Connection::class);
 
@@ -35,5 +45,7 @@ $injector->delegate(
         return $factory->create();
     }
 );
+
+$injector->share(Connection::class);
 
 return $injector;

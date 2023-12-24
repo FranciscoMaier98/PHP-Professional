@@ -60,8 +60,8 @@ switch($routeInfo[0]) {
 }
 
 //echo $response;
-//$response->prepare($request);
-//$response->send();
+$response->prepare($request);
+$response->send();
 
 //throw new \Exception; 
-echo 'Hello from the bootstrap file :)';
+//echo 'Hello from the bootstrap file :)';

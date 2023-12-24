@@ -11,5 +11,10 @@ return [
         '/submit',
         'SocialNews\Submission\Presentation\SubmissionController#show'
     ],
+    [
+        'POST',
+        '/submit',
+        'SocialNews\Submission\Presentation\SubmissionController#submit'
+    ]
 ];
 

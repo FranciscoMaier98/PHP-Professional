@@ -2,16 +2,27 @@
 
 namespace SocialNews\Framework\Rendering;
 
+use SocialNews\Framework\Csrf\StoredTokenReader;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use \Twig\Loader\FilesystemLoader;
 use \Twig\Environment;
+use \Twig\TwigFunction;
 
 final class TwigTemplateRendererFactory
 {
+    private $storedTokenReader;
     private $templateDirectory;
+    private $session;
 
-    public function __construct(TemplateDirectory $templateDirectory)
-    {
+    public function __construct(
+        TemplateDirectory $templateDirectory,
+        StoredTokenReader $storedTokenReader,
+        Session $session
+    ) {
+        $this->storedTokenReader = $storedTokenReader;
         $this->templateDirectory = $templateDirectory;
+        $this->session = $session;
     }
 
     public function create() : TwigTemplateRenderer
@@ -20,9 +31,28 @@ final class TwigTemplateRendererFactory
         //$twigEnvironment = new Environment($loader);
         //return new TwigTemplateRenderer($twigEnvironment);
         
-        $templateDirectory = $this->templateDirectory->toString();
-        $loader = new FilesystemLoader($templateDirectory);
+        $loader = new FilesystemLoader([
+            $this->templateDirectory->toString()
+        ]);
+
         $twigEnvironment = new Environment($loader);
+
+        $twigEnvironment->addFunction(
+            new TwigFunction('get_token', function(string $key): string{
+                $token = $this->storedTokenReader->read($key);
+                return $token->toString();
+            })
+        );
+
+        $twigEnvironment->addFunction(
+            new TwigFunction('get_flash_bag', function (): FlashBagInterface{
+                return $this->session->getFlashBag();
+            })
+        );
+
+        //$templateDirectory = $this->templateDirectory->toString();
+        //$loader = new FilesystemLoader($templateDirectory);
+        
         return new TwigTemplateRenderer($twigEnvironment);
     }
 }
