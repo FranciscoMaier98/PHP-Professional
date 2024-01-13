@@ -22,7 +22,7 @@ final class DbalSubmissionsQuery implements SubmissionsQuery
 
         $qb->addSelect('title');
         $qb->addSelect('url');
-        $qb->addSelect('submissions');
+        $qb->from('submissions');
         $qb->orderBy('creation_date', 'DESC');
 
         $stmt = $qb->execute();

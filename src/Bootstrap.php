@@ -5,7 +5,7 @@ define('ROOT_DIR', dirname(__DIR__));
 require ROOT_DIR . '/vendor/autoload.php';
 
 //\Tracy\OutputDebugger::enable();
-//Debugger::enable();
+\Tracy\Debugger::enable();
 
 $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
@@ -48,12 +48,18 @@ switch($routeInfo[0]) {
     case \FastRoute\Dispatcher::FOUND:
         [$controllerName, $method] = explode ('#', $routeInfo[1]);
         $vars = $routeInfo[2];
+        
+        //print_r($controllerName.'<br>'); SocialNews\Submission\Presentation\SubmissionController
+        //print_r($method); show
+        //exit;
 
         //$factory = new SocialNews\Framework\Rendering\TwigTemplateRendererFactory();
         //$templateRenderer = $factory->create();
         //$controller = new $controllerName($templateRenderer);
 
         $injector = include('Dependencies.php');
+        //print_r($controllerName); //SocialNews\Submission\Presentation\SubmissionController
+        
         $controller = $injector->make($controllerName);
         $response = $controller->$method($request, $vars);
         break;
