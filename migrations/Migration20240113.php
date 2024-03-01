@@ -35,10 +35,10 @@ final class Migration20240113
         $table->addColumn('nickname', Type::STRING);
         $table->addColumn('password_hash', Type::STRING);
         $table->addColumn('creation_date', Type::DATETIME);
-        $table->addColumn('failed_login_attemps', Type::INTEGER, [
+        $table->addColumn('failed_login_attempts', Type::INTEGER, [
             'default' => 0,
         ]);
-        $table->addColumn('last_failed_login_attempts', Type::DATETIME, [
+        $table->addColumn('last_failed_login_attempt', Type::DATETIME, [
             'notnull' => false,
         ]);
     }

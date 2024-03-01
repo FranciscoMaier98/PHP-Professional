@@ -7,6 +7,16 @@ return [
         'SocialNews\FrontPage\Presentation\FrontPageController#show'
     ],
     [
+        'POST',
+        '/login',
+        'SocialNews\User\Presentation\LoginController#logIn'
+    ],
+    [
+        'GET',
+        '/login',
+        'SocialNews\User\Presentation\LoginController#show'
+    ],
+    [
         'GET',
         '/submit',
         'SocialNews\Submission\Presentation\SubmissionController#show'
