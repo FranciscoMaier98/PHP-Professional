@@ -41,6 +41,9 @@ final class DbalUserRepository implements UserRepository
 
     public function save(User $user): void
     {
+
+        print_r($user);
+        exit;
         foreach($user->getRecordedEvents() as $event) {
             if($event instanceof UserWasLoggedIn) {
                 $this->session->set('userId', $user->getId()->toString());
@@ -49,7 +52,7 @@ final class DbalUserRepository implements UserRepository
             throw new LogicException(get_class($event).' was not handled');
         }
         $user->clearRecordedEvents();
-
+        /*
         $qb = $this->connection->createQueryBuilder();
         $qb->update('users');
         $qb->set('nickname', $qb->createNamedParameter($user->getNickname()));
@@ -64,7 +67,7 @@ final class DbalUserRepository implements UserRepository
             Type::DATETIME
         ));
 
-        $qb->execute();
+        $qb->execute();*/
 
     }
 

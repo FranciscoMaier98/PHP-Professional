@@ -27,6 +27,9 @@ use SocialNews\User\Infrastructure\DbalUserRepository;
 use SocialNews\User\Application\NicknameTakenQuery;
 use SocialNews\User\Infrastructure\DbalNicknameTakenQuery;
 
+use SocialNews\Framework\Rbac\User;
+use SocialNews\Framework\Rbac\SymfonySessionCurrentUserFactory;
+
 $injector = new Injector();
 //$injector->alias(SubmissionsQuery::class, MockSubmissionsQuery::class)
 
@@ -59,6 +62,9 @@ $injector->delegate(
     }
 );
 
-$injector->share(Connection::class);
+$injector->delegate(User::class, function () use ($injector): User {
+    $factory = $injector->make(SymfonySessionCurrentUserFactory::class);
+    return $factory->create();
+});
 
 return $injector;

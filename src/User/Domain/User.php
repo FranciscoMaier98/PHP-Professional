@@ -32,7 +32,7 @@ final class User {
         $this->lastFailedLoginAttempt = $lastFailedLoginAttempt;
     }
 
-    /*public static function register(string $nickname, string $password): User
+    public static function register(string $nickname, string $password): User
     {
         return new User(
             Uuid::uuid4(),
@@ -42,7 +42,7 @@ final class User {
             0,
             null
         );
-    }*/
+    }
 
     public function getId(): UuidInterface
     {
